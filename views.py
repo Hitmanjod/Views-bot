@@ -1,4 +1,6 @@
 import asyncio
+import contextlib
+import sys
 import logging
 from os import name, system
 from re import compile, search
@@ -252,3 +254,9 @@ class Auto:
 @client.on(events.NewMessage(chats=SOURCE_CHANNEL))
 async def tg_views(event):
     print(event)
+
+if len(sys.argv) in {1, 3, 4}:
+    with contextlib.suppress(ConnectionError):
+        client.run_until_disconnected()
+else:
+    client.disconnect()
